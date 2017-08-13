@@ -38,7 +38,7 @@ public abstract class MainExcelSheetRecyclerViewAdapter<H, C, CH> implements Exc
 
     public MainExcelSheetRecyclerViewAdapter(Context context) {
         this.context = context;
-
+        initRecyclerViewAdapter();
     }
 
     private void initRecyclerViewAdapter() {
