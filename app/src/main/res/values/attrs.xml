@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExcelSheetView">
+        <attr name="column_width" format="dimension"/>
+        <attr name="header_height" format="dimension"/>
+        <attr name="cell_width" format="dimension"/>
+    </declare-styleable>
+</resources>
