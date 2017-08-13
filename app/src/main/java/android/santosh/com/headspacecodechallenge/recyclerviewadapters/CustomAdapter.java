@@ -2,9 +2,9 @@ package android.santosh.com.headspacecodechallenge.recyclerviewadapters;
 
 import android.content.Context;
 import android.santosh.com.headspacecodechallenge.R;
-import android.santosh.com.headspacecodechallenge.model.CellData;
 import android.santosh.com.headspacecodechallenge.model.ColumnTitle;
 import android.santosh.com.headspacecodechallenge.model.HeaderTitle;
+import android.santosh.com.headspacecodechallenge.model.TableData;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import org.w3c.dom.Text;
  * Created by Santosh on 8/13/17.
  */
 
-public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle, ColumnTitle, CellData> {
+public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle, ColumnTitle, TableData.CellData> {
     private Context context;
     private View.OnClickListener clickListener;
 
@@ -38,7 +38,7 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
 
     @Override
     public void onBindCellDataViewHolder(RecyclerView.ViewHolder holder, int horizontalPosition, int verticalPosition) {
-        CellData cellData = getContentItem(horizontalPosition, verticalPosition);
+        TableData.CellData cellData = getContentItem(horizontalPosition, verticalPosition);
         if (null == holder || !(holder instanceof ContentViewHolder) || cellData == null) {
             return;
         }
