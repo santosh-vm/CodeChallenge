@@ -115,7 +115,7 @@ public class ExcelSheetView extends FrameLayout implements ViewTreeObserver.OnGl
     private View createDividerToColumn() {
         View view = new View(getContext());
         view.setVisibility(GONE);
-        view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bg_line));
+        view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cell_border_color));
         return view;
     }
 

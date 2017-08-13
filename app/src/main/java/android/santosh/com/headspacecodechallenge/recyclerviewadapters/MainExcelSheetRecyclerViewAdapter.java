@@ -120,21 +120,21 @@ public abstract class MainExcelSheetRecyclerViewAdapter<H, C, CH> implements Exc
 
     }
 
-    public H getHeaderItem(int position) {
+    protected H getHeaderItem(int position) {
         if (Utils.isEmpty(headerData) || position < 0 || position >= headerData.size()) {
             return null;
         }
         return headerData.get(position);
     }
 
-    public C getColumnItem(int position) {
+    protected C getColumnItem(int position) {
         if (Utils.isEmpty(columnData) || position < 0 || position >= columnData.size()) {
             return null;
         }
         return columnData.get(position);
     }
 
-    public CH getContentItem(int row, int column) {
+    protected CH getContentItem(int row, int column) {
         if (Utils.isEmpty(contentData) || row < 0 || row >= contentData.size() || Utils
                 .isEmpty(contentData.get(row)) || column < 0 || column >= contentData.get(row).size()) {
             return null;
@@ -208,7 +208,7 @@ public abstract class MainExcelSheetRecyclerViewAdapter<H, C, CH> implements Exc
     }
 
     @Override
-    public int getCellDataItemViewType(int verticalPosition, int horizontalPosition) {
+    public int getCellDataItemViewType(int horizontalPosition,int verticalPosition) {
         return ExcelSheetRecyclerViewAdapter.TYPE_NORMAL;
     }
 

@@ -12,7 +12,7 @@ public interface ExcelSheetRecyclerViewListener {
 
     RecyclerView.ViewHolder onCreateCellDataViewHolder(ViewGroup parent, int viewType);
 
-    void onBindCellDataViewHolder(RecyclerView.ViewHolder holder, int verticalPosition, int horizontalPosition);
+    void onBindCellDataViewHolder(RecyclerView.ViewHolder holder, int horizontalPosition, int verticalPosition);
 
     RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType);
 
@@ -24,7 +24,7 @@ public interface ExcelSheetRecyclerViewListener {
 
     View onCreateTopLeftView();
 
-    int getCellDataItemViewType(int verticalPosition, int horizontalPosition);
+    int getCellDataItemViewType(int horizontalPosition,int verticalPosition);
 
     int getHeaderItemViewType(int position);
 
