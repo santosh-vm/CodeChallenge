@@ -47,17 +47,17 @@ public abstract class MainExcelSheetRecyclerViewAdapter<H, C, CH> implements Exc
         contentRecyclerViewAdapter = new ColumnRecyclerViewAdapter(context, contentData, this);
     }
 
-    public void setHeaderData(List<H> headerData) {
+    private void setHeaderData(List<H> headerData) {
         this.headerData = headerData;
         headerRecyclerViewAdapter.setExcelSheetData(headerData);
     }
 
-    public void setColumnData(List<C> columnData) {
+    private void setColumnData(List<C> columnData) {
         this.columnData = columnData;
         columnRecyclerViewAdapter.setExcelSheetData(columnData);
     }
 
-    public void setContentData(List<List<CH>> contentData) {
+    private void setContentData(List<List<CH>> contentData) {
         this.contentData = contentData;
         contentRecyclerViewAdapter.setExcelSheetData(contentData);
     }

@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,7 +30,7 @@ public class ContentHolderRecyclerViewAdapter<CH> extends ExcelSheetRecyclerView
         super(context, excelSheetData);
         this.context = context;
         this.excelSheetRecyclerViewListener = excelSheetRecyclerViewListener;
-        this.adapterList = new ArrayList<>();
+        this.adapterList = new LinkedList<>();
     }
 
     public void setOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
@@ -42,7 +42,7 @@ public class ContentHolderRecyclerViewAdapter<CH> extends ExcelSheetRecyclerView
         super.setExcelSheetData(excelSheetData != null ? ((List) excelSheetData.get(0)) : null);
         if (excelSheetData != null) {
             if (list == null || list.size() >= excelSheetData.size()) {//refresh or first time
-                list = new ArrayList<>();
+                list = new LinkedList<>();
             }
             for (int i = list.size(); i < excelSheetData.size(); i++) {
                 list.add("");

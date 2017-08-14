@@ -1,31 +1,32 @@
 package android.santosh.com.headspacecodechallenge.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Santosh on 8/13/17.
  */
 
 public class TableData {
-    private LinkedList<RowData> rowDatas;
+    private List<RowData> rowDatas;
 
-    public LinkedList<RowData> getRowDatas() {
+    public List<RowData> getRowDatas() {
         return rowDatas;
     }
 
     public class RowData {
-        private LinkedList<CellData> cellDatas;
+        private List<CellData> cellDatas;
 
-        public LinkedList<CellData> getCellDatas() {
+        public List<CellData> getCellDatas() {
             return cellDatas;
         }
     }
 
     public class CellData{
-        @SerializedName("data")
         private String data;
+
+        public void setData(String data) {
+            this.data = data;
+        }
 
         public String getData() {
             return data;
