@@ -95,21 +95,27 @@ public class ExcelSheetView extends FrameLayout implements ViewTreeObserver.OnGl
 
     private RecyclerView createHeader() {
         RecyclerView recyclerView = new RecyclerView(getContext());
-        recyclerView.setLayoutManager(getHeaderLayoutManager());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.addOnScrollListener(contentScrollListener);
         return recyclerView;
     }
 
     private RecyclerView createColumn() {
         RecyclerView recyclerView = new RecyclerView(getContext());
-        recyclerView.setLayoutManager(getColumnLayoutManager());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.addOnScrollListener(columnScrollListener);
         return recyclerView;
     }
 
     private RecyclerView createContent() {
         RecyclerView recyclerView = new RecyclerView(getContext());
-        recyclerView.setLayoutManager(getContentLayoutManager());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.addOnScrollListener(contentScrollListener);
         return recyclerView;
     }
@@ -119,33 +125,6 @@ public class ExcelSheetView extends FrameLayout implements ViewTreeObserver.OnGl
         view.setVisibility(GONE);
         view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cell_border_color));
         return view;
-    }
-
-    protected RecyclerView.LayoutManager getContentLayoutManager() {
-        if (null == contentRecyclerView || null == contentRecyclerView.getLayoutManager()) {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            return layoutManager;
-        }
-        return contentRecyclerView.getLayoutManager();
-    }
-
-    private RecyclerView.LayoutManager getHeaderLayoutManager() {
-        if (null == headerRecyclerView || null == headerRecyclerView.getLayoutManager()) {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            return layoutManager;
-        }
-        return headerRecyclerView.getLayoutManager();
-    }
-
-    private RecyclerView.LayoutManager getColumnLayoutManager() {
-        if (null == columnRecyclerView || null == columnRecyclerView.getLayoutManager()) {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            return layoutManager;
-        }
-        return columnRecyclerView.getLayoutManager();
     }
 
     public void setHasHeader(boolean hasHeader) {
@@ -165,7 +144,7 @@ public class ExcelSheetView extends FrameLayout implements ViewTreeObserver.OnGl
 
     private void buildAdapter() {
         if (columnRecyclerView != null) {
-            contentRecyclerView.setAdapter(mainExcelSheetRecyclerViewAdapter.getColumnRecyclerViewAdapter());
+            columnRecyclerView.setAdapter(mainExcelSheetRecyclerViewAdapter.getColumnRecyclerViewAdapter());
         }
         if (headerRecyclerView != null) {
             headerRecyclerView.setAdapter(mainExcelSheetRecyclerViewAdapter.getHeaderRecyclerViewAdapter());

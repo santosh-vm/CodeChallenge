@@ -44,7 +44,7 @@ public abstract class MainExcelSheetRecyclerViewAdapter<H, C, CH> implements Exc
     private void initRecyclerViewAdapter() {
         headerRecyclerViewAdapter = new HeaderRecyclerViewAdapter(context, headerData, this);
         columnRecyclerViewAdapter = new ColumnRecyclerViewAdapter(context, columnData, this);
-        contentRecyclerViewAdapter = new ColumnRecyclerViewAdapter(context, contentData, this);
+        contentRecyclerViewAdapter = new ContentHolderRecyclerViewAdapter(context, contentData, this);
     }
 
     private void setHeaderData(List<H> headerData) {
