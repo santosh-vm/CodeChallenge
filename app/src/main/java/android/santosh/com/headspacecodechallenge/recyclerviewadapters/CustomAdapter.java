@@ -2,6 +2,7 @@ package android.santosh.com.headspacecodechallenge.recyclerviewadapters;
 
 import android.content.Context;
 import android.santosh.com.headspacecodechallenge.R;
+import android.santosh.com.headspacecodechallenge.interfaces.ExcelSheetClickListener;
 import android.santosh.com.headspacecodechallenge.model.ColumnTitle;
 import android.santosh.com.headspacecodechallenge.model.HeaderTitle;
 import android.santosh.com.headspacecodechallenge.model.TableData;
@@ -12,20 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Santosh on 8/13/17.
  */
 
 public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle, ColumnTitle, TableData.CellData> {
     private Context context;
-    private View.OnClickListener clickListener;
+    private ExcelSheetClickListener excelSheetClickListener;
 
-    public CustomAdapter(Context context, View.OnClickListener clickListener) {
+    public CustomAdapter(Context context, ExcelSheetClickListener excelSheetClickListener) {
         super(context);
         this.context = context;
-        this.clickListener = clickListener;
+        this.excelSheetClickListener = excelSheetClickListener;
     }
 
 
@@ -37,8 +36,8 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
     }
 
     @Override
-    public void onBindCellDataViewHolder(RecyclerView.ViewHolder holder, int horizontalPosition, int verticalPosition) {
-        TableData.CellData cellData = getContentItem(horizontalPosition, verticalPosition);
+    public void onBindCellDataViewHolder(RecyclerView.ViewHolder holder, final int horizontalPosition, final int verticalPosition) {
+        final TableData.CellData cellData = getContentItem(horizontalPosition, verticalPosition);
         if (null == holder || !(holder instanceof ContentViewHolder) || cellData == null) {
             return;
         }
@@ -46,14 +45,22 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
         if (!TextUtils.isEmpty(cellData.getData())) {
             contentViewHolder.titleTextView.setText(cellData.getData());
         }
+        contentViewHolder.textViewHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                excelSheetClickListener.onExcelSheetContentClicked(cellData, horizontalPosition, verticalPosition);
+            }
+        });
     }
 
     class ContentViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
+        public View textViewHolder;
 
         public ContentViewHolder(View itemview) {
             super(itemview);
-            titleTextView = itemview.findViewById(R.id.cell_content);
+            titleTextView = itemview.findViewById(R.id.cell_textview);
+            textViewHolder = itemview.findViewById(R.id.cell_container);
         }
     }
 

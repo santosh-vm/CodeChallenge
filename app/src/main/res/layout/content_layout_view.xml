@@ -15,7 +15,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/cell_content"
+            android:id="@+id/cell_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textStyle="italic"

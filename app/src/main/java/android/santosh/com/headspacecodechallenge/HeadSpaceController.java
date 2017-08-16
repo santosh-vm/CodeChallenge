@@ -62,7 +62,7 @@ public class HeadSpaceController {
         headerTitleList = new LinkedList<>();
         for (int i = 0; i < COLUMN_SIZE; i++) {
             HeaderTitle headerTitle = new HeaderTitle();
-            headerTitle.setTitle(Character.toString(alphabets.charAt(i)));
+            headerTitle.setTitle(Character.toString(Character.toUpperCase(alphabets.charAt(i))));
             headerTitleList.add(headerTitle);
         }
     }
@@ -108,10 +108,10 @@ public class HeadSpaceController {
                 uiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d(TAG,"headerTitleList.size(): "+headerTitleList.size()+", columnTitleList.size(): "+columnTitleList.size()+", tableDataList.size(): "+tableDataList.size());
+                        Log.d(TAG, "headerTitleList.size(): " + headerTitleList.size() + ", columnTitleList.size(): " + columnTitleList.size() + ", tableDataList.size(): " + tableDataList.size());
                         excelSheetListener.onExcelSheetLoaded(headerTitleList, columnTitleList, tableDataList);
                     }
-                },1000);
+                }, 1000);
             }
         }
     }
