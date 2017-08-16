@@ -99,7 +99,6 @@ public abstract class ExcelSheetRecyclerViewAdapter<T> extends RecyclerView.Adap
         if (null != excelSheetData) {
             size += excelSheetData.size();
         }
-        Log.d(TAG,"this: "+this+", getItemCount(): "+size);
         return size;
     }
 
