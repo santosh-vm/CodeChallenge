@@ -61,8 +61,6 @@ public class ExcelSheetFragment extends BaseFragment implements ExcelSheetListen
     public void onExcelSheetLoaded(List<HeaderTitle> headerTitleList, List<ColumnTitle> columnTitleList, List<List<TableData.CellData>> tableDataList) {
         progress.setVisibility(View.GONE);
         customAdapter.setAllData(headerTitleList, columnTitleList, tableDataList);
-        customAdapter.disableFooter();
-        customAdapter.disableHeader();
     }
 
     @Override
