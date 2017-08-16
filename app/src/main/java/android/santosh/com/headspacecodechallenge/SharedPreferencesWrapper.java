@@ -18,7 +18,13 @@ public class SharedPreferencesWrapper {
         this.preferences = context.getSharedPreferences(context.getPackageName() + "app_prefs", Context.MODE_PRIVATE);
     }
 
+    public String getExcelSheetDataAsString() {
+        return getStringValue(TABLE_DATA);
+    }
 
+    public void saveExcelSheetDataAsString(String excelSheetDataAsString) {
+        saveStringValue(TABLE_DATA, excelSheetDataAsString);
+    }
 
     private void saveStringValue(String key, String value) {
         preferences.edit().putString(key, value).apply();

@@ -5,6 +5,7 @@ import android.santosh.com.headspacecodechallenge.interfaces.ExcelSheetListener;
 import android.santosh.com.headspacecodechallenge.model.ColumnTitle;
 import android.santosh.com.headspacecodechallenge.model.HeaderTitle;
 import android.santosh.com.headspacecodechallenge.model.TableData;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -50,8 +51,12 @@ public class HeadSpaceController {
                 public void run() {
                     generateHeaderData();
                     generateColumnData();
-                    generateDefaultCellData();
+                    loadExcelSheetData();
                     notifyExcelSheetLoaded();
+                    //Log.d(TAG,"gson.toJson(tableDataList,tableDataList.getClass()): "+gson.toJson(tableDataList,tableDataList.getClass()));
+                    List<List<TableData.CellData>> tempTableData = gson.fromJson(gson.toJson(tableDataList,tableDataList.getClass()),tableDataList.getClass());
+                    Log.d(TAG,"tempTableData: "+tempTableData.size());
+                    //gson.toJson(tableDataList,tableDataList.getClass());
                 }
             });
         }
@@ -76,6 +81,16 @@ public class HeadSpaceController {
         }
     }
 
+    private void loadExcelSheetData(){
+        String excelDataAsString = sharedPreferencesWrapper.getExcelSheetDataAsString();
+        Log.d(TAG,"loadExcelSheetData() excelDataAsString: "+excelDataAsString);
+        if(TextUtils.isEmpty(excelDataAsString)){
+            generateDefaultCellData();
+        } else {
+            tableDataList = gson.fromJson(excelDataAsString,tableDataList.getClass());
+        }
+    }
+
     private void generateDefaultCellData() {
         tableDataList = new LinkedList<>();
         TableData tableData = new TableData();
@@ -84,7 +99,7 @@ public class HeadSpaceController {
             tableDataList.add(cellDataList);
             for (int j = 0; j < COLUMN_SIZE; j++) {
                 TableData.CellData cellData = tableData.new CellData();
-                cellData.setData("Value");
+                cellData.setData(null);
                 cellDataList.add(cellData);
             }
         }
