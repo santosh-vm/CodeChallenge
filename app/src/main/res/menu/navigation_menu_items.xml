@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/save"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Save" />
+    <item
+        android:id="@+id/clear"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Clear" />
+    <item
+        android:id="@+id/reload"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Reload" />
+
+</menu>
