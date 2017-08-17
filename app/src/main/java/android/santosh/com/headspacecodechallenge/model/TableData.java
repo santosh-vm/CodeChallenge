@@ -23,6 +23,7 @@ public class TableData {
 
     public class CellData{
         private String data;
+        private boolean isSelected;
 
         public void setData(String data) {
             this.data = data;
@@ -30,6 +31,14 @@ public class TableData {
 
         public String getData() {
             return data;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
         }
     }
 
