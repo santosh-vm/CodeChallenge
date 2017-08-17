@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     android:id="@+id/excel_sheet_fragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?actionBarSize"
     tools:context=".activity.MainActivity">
 
-    <android.santosh.com.headspacecodechallenge.views.ExcelSheetView
-        android:id="@+id/excel_sheet_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cell_width="@dimen/cell_length"
-        app:column_width="@dimen/cell_length"
-        app:header_height="@dimen/cell_length"/>
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.santosh.com.headspacecodechallenge.views.ExcelSheetEditText
+                android:id="@+id/excel_sheet_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="1"/>
+        </FrameLayout>
+
+        <android.santosh.com.headspacecodechallenge.views.ExcelSheetView
+            android:id="@+id/excel_sheet_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cell_width="@dimen/cell_length"
+            app:column_width="@dimen/cell_length"
+            app:header_height="@dimen/cell_length"/>
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_centerInParent="true"/>
 
-</FrameLayout>
+</RelativeLayout>

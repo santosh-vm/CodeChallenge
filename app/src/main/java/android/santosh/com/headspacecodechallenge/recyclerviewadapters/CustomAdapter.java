@@ -45,6 +45,11 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
         if (!TextUtils.isEmpty(cellData.getData())) {
             contentViewHolder.titleTextView.setText(cellData.getData());
         }
+        if (cellData.isSelected()) {
+            contentViewHolder.selectedView.setVisibility(View.VISIBLE);
+        } else {
+            contentViewHolder.selectedView.setVisibility(View.GONE);
+        }
         contentViewHolder.textViewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,11 +61,13 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
     class ContentViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public View textViewHolder;
+        public View selectedView;
 
         public ContentViewHolder(View itemview) {
             super(itemview);
-            titleTextView = itemview.findViewById(R.id.cell_textview);
+            titleTextView = (TextView) itemview.findViewById(R.id.cell_textview);
             textViewHolder = itemview.findViewById(R.id.cell_container);
+            selectedView = itemview.findViewById(R.id.selected_background);
         }
     }
 
@@ -87,7 +94,7 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
 
         public HeaderViewHolder(View itemview) {
             super(itemview);
-            titleTextView = itemview.findViewById(R.id.cell_title);
+            titleTextView = (TextView) itemview.findViewById(R.id.cell_title);
         }
     }
 
@@ -113,7 +120,7 @@ public class CustomAdapter extends MainExcelSheetRecyclerViewAdapter<HeaderTitle
 
         public ColumnViewHolder(View itemview) {
             super(itemview);
-            titleTextView = itemview.findViewById(R.id.cell_title);
+            titleTextView = (TextView) itemview.findViewById(R.id.cell_title);
         }
     }
 

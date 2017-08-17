@@ -67,12 +67,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (id){
             case R.id.save:
                 Log.d(TAG,"save");
+                headSpaceAPI.getHeadSpaceController().saveExcelSheetData();
                 break;
             case R.id.clear:
                 Log.d(TAG,"clear");
+                headSpaceAPI.getHeadSpaceController().clearExcelSheet();
                 break;
             case R.id.reload:
                 Log.d(TAG,"reload");
+                headSpaceAPI.getHeadSpaceController().reloadExcelSheet();
                 break;
         }
 

@@ -10,4 +10,6 @@ public interface ExcelSheetClickListener {
 
     void onExcelSheetContentClicked(TableData.CellData cellData, int row, int column);
 
+    void onExcelSheetCellDataUpdated(String data, int row, int column);
+
 }

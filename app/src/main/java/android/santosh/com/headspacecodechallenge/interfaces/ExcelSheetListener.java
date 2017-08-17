@@ -14,4 +14,6 @@ public interface ExcelSheetListener {
     void onExcelSheetLoaded(List<HeaderTitle> headerTitleList,
                             List<ColumnTitle> columnTitleList,
                             List<List<TableData.CellData>> tableDataList);
+
+    void onExcelSheetCellDataRefreshed(List<List<TableData.CellData>> tableDataList);
 }

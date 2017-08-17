@@ -8,6 +8,7 @@ import android.santosh.com.headspacecodechallenge.model.ColumnTitle;
 import android.santosh.com.headspacecodechallenge.model.HeaderTitle;
 import android.santosh.com.headspacecodechallenge.model.TableData;
 import android.santosh.com.headspacecodechallenge.recyclerviewadapters.CustomAdapter;
+import android.santosh.com.headspacecodechallenge.views.ExcelSheetEditText;
 import android.santosh.com.headspacecodechallenge.views.ExcelSheetView;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class ExcelSheetFragment extends BaseFragment implements ExcelSheetListen
     private ProgressBar progress;
     private ExcelSheetView excelSheetView;
     private CustomAdapter customAdapter;
+    private ExcelSheetEditText excelSheetEditText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +51,9 @@ public class ExcelSheetFragment extends BaseFragment implements ExcelSheetListen
         excelSheetView = (ExcelSheetView) rootView.findViewById(R.id.excel_sheet_view);
         excelSheetView.setAdapter(customAdapter);
         progress = (ProgressBar) rootView.findViewById(R.id.progress);
+        excelSheetEditText = (ExcelSheetEditText) rootView.findViewById(R.id.excel_sheet_edit_text);
+        excelSheetEditText.setExcelSheetClickListener(this);
+        excelSheetEditText.setVisibility(View.GONE);
     }
 
     @Override
@@ -60,11 +65,27 @@ public class ExcelSheetFragment extends BaseFragment implements ExcelSheetListen
     @Override
     public void onExcelSheetLoaded(List<HeaderTitle> headerTitleList, List<ColumnTitle> columnTitleList, List<List<TableData.CellData>> tableDataList) {
         progress.setVisibility(View.GONE);
+        excelSheetEditText.setVisibility(View.VISIBLE);
+        excelSheetEditText.setText("");
+        excelSheetEditText.clearFocus();
         customAdapter.setAllData(headerTitleList, columnTitleList, tableDataList);
     }
 
     @Override
     public void onExcelSheetContentClicked(TableData.CellData cellData, int row, int column) {
         Log.d(TAG, "cellData.getData(): " + cellData.getData() + ", row: " + row + ", column: " + column);
+        headSpaceAPI.getHeadSpaceController().updateCellSelectedStatus(row, column);
+        excelSheetEditText.setInfo(cellData.getData(), row, column);
+    }
+
+    @Override
+    public void onExcelSheetCellDataUpdated(String data, int row, int column) {
+        Log.d(TAG, "onExcelSheetCellDataUpdated, data: " + data + ", row: " + row + ", column: " + column);
+        headSpaceAPI.getHeadSpaceController().updateCellData(data, row, column);
+    }
+
+    @Override
+    public void onExcelSheetCellDataRefreshed(List<List<TableData.CellData>> tableDataList) {
+        customAdapter.setContentData(tableDataList);
     }
 }

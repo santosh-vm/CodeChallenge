@@ -4,6 +4,11 @@
     android:layout_width="@dimen/cell_length"
     android:layout_height="@dimen/cell_length"
     android:background="@color/data_cell_bacground_color">
+    <View
+        android:id="@+id/selected_background"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="#81BEF7"/>
 
     <LinearLayout
         android:id="@+id/cell_container"

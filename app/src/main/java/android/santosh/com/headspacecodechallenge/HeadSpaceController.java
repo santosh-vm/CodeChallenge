@@ -7,9 +7,11 @@ import android.santosh.com.headspacecodechallenge.model.HeaderTitle;
 import android.santosh.com.headspacecodechallenge.model.TableData;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +29,8 @@ public class HeadSpaceController {
     private String alphabets = "abcdefghijklmnopqrstuvwxyz";
     private static int ROW_SIZE = 8;
     private static int COLUMN_SIZE = 8;
+    private int currentlySelectedRowIndex = 0;
+    private int currentlySelectedColumnIndex = 0;
 
     private Handler uiHandler;
     private SharedPreferencesWrapper sharedPreferencesWrapper;
@@ -49,16 +53,115 @@ public class HeadSpaceController {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    generateHeaderData();
-                    generateColumnData();
-                    loadExcelSheetData();
+                    if (tableDataList == null || tableDataList.size() < 0) {
+                        generateHeaderData();
+                        generateColumnData();
+                        loadExcelSheetData();
+                    }
                     notifyExcelSheetLoaded();
-                    List<List<TableData.CellData>> tempTableData = gson.fromJson(gson.toJson(tableDataList,tableDataList.getClass()),tableDataList.getClass());
-                    Log.d(TAG,"tempTableData: "+tempTableData.size());
                 }
             });
         }
 
+    }
+
+    public void saveExcelSheetData(){
+        if(executorService!=null && !executorService.isShutdown()){
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if(tableDataList!=null && tableDataList.size()>0){
+                        clearSelected();
+                        String excelDataString = gson.toJson(tableDataList,tableDataList.getClass());
+                        sharedPreferencesWrapper.saveExcelSheetDataAsString(excelDataString);
+                        notifyExcelSheetCellDataRefresh();
+                    }
+                }
+            });
+        }
+    }
+
+    public void clearExcelSheet(){
+        if(executorService!=null && !executorService.isShutdown()){
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if(tableDataList!=null && tableDataList.size()>0){
+                        for(List<TableData.CellData> rowData : tableDataList){
+                            for(TableData.CellData cellData : rowData){
+                                cellData.setData(null);
+                                cellData.setSelected(false);
+                            }
+                        }
+                    }
+                    currentlySelectedRowIndex = 0;
+                    currentlySelectedColumnIndex = 0;
+                    notifyExcelSheetCellDataRefresh();
+                }
+            });
+        }
+    }
+
+    private synchronized void clearSelected(){
+        if(tableDataList!=null && tableDataList.size()>0){
+            for(List<TableData.CellData> rowData : tableDataList){
+                for(TableData.CellData cellData : rowData){
+                    if(cellData.isSelected()){
+                        cellData.setSelected(false);
+                    }
+                }
+            }
+        }
+        currentlySelectedRowIndex = 0;
+        currentlySelectedColumnIndex = 0;
+    }
+
+    public synchronized void reloadExcelSheet(){
+        if(executorService!=null && !executorService.isShutdown()){
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    generateHeaderData();
+                    generateColumnData();
+                    loadExcelSheetData();
+                    notifyExcelSheetLoaded();
+                }
+            });
+        }
+    }
+
+    public void updateCellSelectedStatus(final int row, final int column) {
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (tableDataList != null && tableDataList.size() > 0) {
+                        //Un-select previously selected Cell Data
+                        tableDataList.get(currentlySelectedRowIndex).get(currentlySelectedColumnIndex).setSelected(false);
+                        //Set select for Cell Data with the new row and column value.
+                        tableDataList.get(row).get(column).setSelected(true);
+                        currentlySelectedRowIndex = row;
+                        currentlySelectedColumnIndex = column;
+                        notifyExcelSheetCellDataRefresh();
+                    }
+                }
+            });
+        }
+    }
+
+    public void updateCellData(final String data, final int row, final int column) {
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (tableDataList != null && tableDataList.size() > 0) {
+                        tableDataList.get(row).get(column).setData(data);
+                        currentlySelectedRowIndex = row;
+                        notifyExcelSheetCellDataRefresh();
+                    }
+                }
+            });
+        }
     }
 
     private void generateHeaderData() {
@@ -79,13 +182,13 @@ public class HeadSpaceController {
         }
     }
 
-    private void loadExcelSheetData(){
+    private void loadExcelSheetData() {
+        tableDataList = new LinkedList<>();
         String excelDataAsString = sharedPreferencesWrapper.getExcelSheetDataAsString();
-        Log.d(TAG,"loadExcelSheetData() excelDataAsString: "+excelDataAsString);
-        if(TextUtils.isEmpty(excelDataAsString)){
+        if (TextUtils.isEmpty(excelDataAsString)) {
             generateDefaultCellData();
         } else {
-            tableDataList = gson.fromJson(excelDataAsString,tableDataList.getClass());
+            tableDataList = gson.fromJson(excelDataAsString, new TypeToken<List<List<TableData.CellData>>>() {}.getType());
         }
     }
 
@@ -97,6 +200,7 @@ public class HeadSpaceController {
             tableDataList.add(cellDataList);
             for (int j = 0; j < COLUMN_SIZE; j++) {
                 TableData.CellData cellData = tableData.new CellData();
+                cellData.setSelected(false);
                 cellData.setData(null);
                 cellDataList.add(cellData);
             }
@@ -125,6 +229,19 @@ public class HeadSpaceController {
                         excelSheetListener.onExcelSheetLoaded(headerTitleList, columnTitleList, tableDataList);
                     }
                 }, 1000);
+            }
+        }
+    }
+
+    private void notifyExcelSheetCellDataRefresh() {
+        if (excelSheetListeners != null & excelSheetListeners.size() > 0) {
+            for (final ExcelSheetListener excelSheetListener : excelSheetListeners) {
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        excelSheetListener.onExcelSheetCellDataRefreshed(tableDataList);
+                    }
+                });
             }
         }
     }
