@@ -53,10 +53,8 @@ public class HeadSpaceController {
                     generateColumnData();
                     loadExcelSheetData();
                     notifyExcelSheetLoaded();
-                    //Log.d(TAG,"gson.toJson(tableDataList,tableDataList.getClass()): "+gson.toJson(tableDataList,tableDataList.getClass()));
                     List<List<TableData.CellData>> tempTableData = gson.fromJson(gson.toJson(tableDataList,tableDataList.getClass()),tableDataList.getClass());
                     Log.d(TAG,"tempTableData: "+tempTableData.size());
-                    //gson.toJson(tableDataList,tableDataList.getClass());
                 }
             });
         }
