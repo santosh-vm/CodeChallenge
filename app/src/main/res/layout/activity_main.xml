@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="android.santosh.com.headspacecodechallenge.activity.MainActivity">
+    tools:context="android.santosh.com.codechallenge.activity.MainActivity">
 
     <!-- The toolbar -->
     <RelativeLayout
@@ -51,7 +51,7 @@
 
         <fragment
             android:id="@+id/excel_fragment"
-            class="android.santosh.com.headspacecodechallenge.fragment.ExcelSheetFragment"
+            class="android.santosh.com.codechallenge.fragment.ExcelSheetFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

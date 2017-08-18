@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.santosh.com.headspacecodechallenge.views.ExcelSheetEditText
+            <android.santosh.com.codechallenge.views.ExcelSheetEditText
                 android:id="@+id/excel_sheet_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:maxLines="1"/>
         </FrameLayout>
 
-        <android.santosh.com.headspacecodechallenge.views.ExcelSheetView
+        <android.santosh.com.codechallenge.views.ExcelSheetView
             android:id="@+id/excel_sheet_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
